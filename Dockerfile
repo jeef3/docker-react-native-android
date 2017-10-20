@@ -8,8 +8,6 @@ RUN apt-get update && apt-get install -y \
       curl \
       wget \
       git \
-      # software-properties-common \ # Adds add-apt-repository
-      # python-software-properties \ # To install Java
       build-essential \
       && apt-get clean
 
@@ -52,20 +50,8 @@ RUN cd /opt && \
     unzip -n ${ANDROID_SDK_TOOLS_FILENAME} -d android-sdk-linux && \
     rm ${ANDROID_SDK_TOOLS_FILENAME}
 
-# Accept those licenses!
+# Accept those licenses, then install packages
 RUN yes | sdkmanager --licenses
-
-# Gradle
-ENV GRADLE_VERSION 2.14.1
-ENV GRADLE_HOME /usr/lib/gradle
-ENV PATH $PATH:$GRADLE_HOME/bin
-
-RUN cd /usr/lib \
-   && curl -fl https://downloads.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip -o gradle-bin.zip \
-   && unzip "gradle-bin.zip" \
-   && ln -s "/usr/lib/gradle-${GRADLE_VERSION}/bin/gradle" /usr/bin/gradle \
-   && rm "gradle-bin.zip"
-
 RUN sdkmanager \
       "build-tools;23.0.1" \
       "build-tools;23.0.3" \
@@ -79,6 +65,17 @@ RUN sdkmanager \
       "platforms;android-23" \
       "platforms;android-25" \
       "tools"
+
+# Gradle
+ENV GRADLE_VERSION 2.14.1
+ENV GRADLE_HOME /usr/lib/gradle
+ENV PATH $PATH:$GRADLE_HOME/bin
+
+RUN cd /usr/lib && \
+       curl -fl https://downloads.gradle.org/distributions/gradle-${GRADLE_VERSION}-all.zip -o gradle-all.zip && \
+       unzip "gradle-all.zip" && \
+       ln -s "/usr/lib/gradle-${GRADLE_VERSION}/bin/gradle" /usr/bin/gradle && \
+       rm "gradle-all.zip"
 
 # i386 architecture required for running 32 bit Android tools
 RUN dpkg --add-architecture i386 && \
