@@ -72,6 +72,9 @@ RUN sdkmanager \
       "build-tools;25.0.1" \
       "build-tools;25.0.2" \
       "emulator" \
+      "extras;android;m2repository" \
+      "extras;google;m2repository" \
+      "patcher;v4" \
       "platform-tools" \
       "platforms;android-23" \
       "platforms;android-25" \
