@@ -72,10 +72,10 @@ ENV GRADLE_HOME /usr/lib/gradle
 ENV PATH $PATH:$GRADLE_HOME/bin
 
 RUN cd /usr/lib && \
-       curl -fl https://downloads.gradle.org/distributions/gradle-${GRADLE_VERSION}-all.zip -o gradle-all.zip && \
-       unzip "gradle-all.zip" && \
-       ln -s "/usr/lib/gradle-${GRADLE_VERSION}/bin/gradle" /usr/bin/gradle && \
-       rm "gradle-all.zip"
+      curl --verbose -fl https://downloads.gradle.org/distributions/gradle-${GRADLE_VERSION}-all.zip -o gradle-all.zip && \
+      unzip /usr/lib/gradle-all.zip && \
+      ln -s "/usr/lib/gradle-${GRADLE_VERSION}/bin/gradle" /usr/bin/gradle && \
+      rm /usr/lib/gradle-all.zip
 
 # i386 architecture required for running 32 bit Android tools
 RUN dpkg --add-architecture i386 && \
