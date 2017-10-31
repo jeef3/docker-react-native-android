@@ -68,13 +68,13 @@ RUN sdkmanager \
 
 # Gradle
 ENV GRADLE_VERSION 2.14.1
-ENV GRADLE_HOME /usr/lib/gradle
+ENV GRADLE_HOME /usr/bin/gradle
 ENV PATH $PATH:$GRADLE_HOME/bin
 
 RUN cd /usr/lib && \
       curl --verbose -fl https://downloads.gradle.org/distributions/gradle-${GRADLE_VERSION}-all.zip -o gradle-all.zip && \
       unzip /usr/lib/gradle-all.zip && \
-      ln -s "/usr/lib/gradle-${GRADLE_VERSION}/bin/gradle" /usr/bin/gradle && \
+      ln -s "/usr/lib/gradle-${GRADLE_VERSION}/bin/gradle" $GRADLE_HOME && \
       rm /usr/lib/gradle-all.zip
 
 # i386 architecture required for running 32 bit Android tools
